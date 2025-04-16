@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { connectToMongoDB } from "./mongo";
+import path from 'path';
 
 const app = express();
 app.use(express.json());
@@ -78,3 +79,7 @@ app.use((req, res, next) => {
     process.exit(1);
   }
 })();
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
